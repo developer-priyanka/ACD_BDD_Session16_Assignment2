@@ -1,0 +1,16 @@
+Create table students(name string,name string,college string,date string,major string,gpa float,state string,county string) row format delimited fields terminated by ',' stored as textfile;
+
+load data local inpath'/home/acadgild/studentDS.txt' into table students;
+
+select avg(gpa) from students;(this takes longer time)
+
+create index student_index on table student(gpa) as 'org.apache.hadoop.hive.ql.index.compact.CompactIndexHandler' with deferred rebuild;
+
+alter index student_index on students rebuild;
+
+show formatted index on students;
+
+select avg(gpa) from students;(this takes less time than above aftre indexing on column.)
+
+so index is used for optimize query performance.
+
